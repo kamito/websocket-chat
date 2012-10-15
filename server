@@ -5,7 +5,7 @@
 ## Settings
 #--------------------
 # HOST
-HOST = "192.168.3.13"
+HOST = "127.0.0.1"
 # PORT
 PORT = 51234
 #--------------------
@@ -35,7 +35,38 @@ options = {
   :host => HOST,
   :port => PORT,
 }
-EventMachine::WebSocket.start(options) do |ws|
+
+
+class Server
+  extend EventMachine::WebSocket
+
+  def self.start(options, &blk)
+    EM.epoll
+    EM.run do
+
+      trap("TERM") { stop }
+      trap("INT")  { stop }
+
+      EventMachine::start_server(options[:host], options[:port],
+                                 EventMachine::WebSocket::Connection, options) do |c|
+        blk.call(c)
+      end
+    end
+  end
+
+  def self.stop
+    if File.exists?(PIDDILE)
+      pid = File.read(PIDDILE).to_i
+      Process.kill('KILL', pid)
+    else
+      puts ""
+      puts "Terminating WebSocket Server"
+      EventMachine.stop
+    end
+  end
+end
+
+Server.start(options) do |ws|
   username = nil
 
   ws.onopen do
@@ -66,9 +97,5 @@ EventMachine::WebSocket.start(options) do |ws|
 
   ws.onclose do
     puts "Closed session."
-    if File.exists?(PIDDILE)
-      pid = File.read(PIDDILE)
-      Process.kill('KILL', pid)
-    end
   end
 end

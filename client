@@ -4,7 +4,7 @@
 ## Settings
 #--------------------
 # SERVER (host and port with "ws" protocol)
-SERVER = "ws://192.168.3.13:51234"
+SERVER = "ws://127.0.0.1:51234"
 #--------------------
 
 
@@ -38,7 +38,12 @@ end
 
 $stdin.each_line() do |line|
   data = line.chomp()
-  client.send(data)
+  if data == 'exit'
+    client.close()
+    exit()
+  else
+    client.send(data)
+  end
 end
 
 client.close()
