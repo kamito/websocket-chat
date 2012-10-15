@@ -48,7 +48,7 @@ EventMachine::WebSocket.start(options) do |ws|
       io << "#{msg}\n"
     end
 
-    ws.send(msg) #to myself
+    # ws.send(msg) #to myself # don't send myself
     connections.each do |username, con|
       #to other people
       con.send(msg) unless con == ws
