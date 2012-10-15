@@ -20,3 +20,6 @@ doc/
 
 # Logs
 logs
+
+# PID
+server.pid

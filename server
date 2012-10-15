@@ -14,10 +14,19 @@ PORT = 51234
 require 'em-websocket'
 require 'fileutils'
 
-LOGDIR = File.expand_path(File.join(File.dirname(__FILE__), 'logs'))
+CURRENT_DIR = File.expand_path(File.join(File.dirname(__FILE__)))
+LOGDIR = File.join(CURRENT_DIR, 'logs')
+PIDDILE = File.join(CURRENT_DIR, 'server.pid')
+
 FileUtils.makedirs(LOGDIR) unless File.exists?(LOGDIR)
 
-Process.daemon(nochdir=true) if ARGV[0] == "-D"
+if ARGV[0] == "-D"
+  Process.daemon(nochdir=true)
+  File.open(PIDDILE, "w") do |io|
+    io.write(Process.pid)
+  end
+end
+
 connections = Hash.new
 now = Time.now
 logpath = File.join(LOGDIR, "#{now.strftime('%Y%m%d%H%M%S')}.#{now.usec}.log")
@@ -57,5 +66,9 @@ EventMachine::WebSocket.start(options) do |ws|
 
   ws.onclose do
     puts "Closed session."
+    if File.exists?(PIDDILE)
+      pid = File.read(PIDDILE)
+      Process.kill('KILL', pid)
+    end
   end
 end

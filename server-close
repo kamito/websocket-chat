@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8; mode: ruby -*-
+
+CURRENT_DIR = File.expand_path(File.join(File.dirname(__FILE__)))
+PIDDILE = File.join(CURRENT_DIR, 'server.pid')
+
+if File.exists?(PIDDILE)
+  pid = File.read(PIDDILE).to_i
+  Process.kill('KILL', pid)
+
+  File.unlink(PIDDILE)
+end
