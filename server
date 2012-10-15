@@ -2,13 +2,17 @@
 # -*- coding: utf-8; mode: ruby -*-
 
 # サーバー
+## Settings
+#--------------------
+# HOST
+HOST = "192.168.3.18"
+# PORT
+PORT = 51234
+#--------------------
+
 
 require 'em-websocket'
 require 'fileutils'
-
-
-HOST = "192.168.3.18"
-PORT = 51234
 
 LOGDIR = File.expand_path(File.join(File.dirname(__FILE__), 'logs'))
 FileUtils.makedirs(LOGDIR) unless File.exists?(LOGDIR)
