@@ -5,7 +5,7 @@
 ## Settings
 #--------------------
 # HOST
-HOST = "192.168.3.18"
+HOST = "192.168.3.13"
 # PORT
 PORT = 51234
 #--------------------
@@ -57,7 +57,7 @@ EventMachine::WebSocket.start(options) do |ws|
       io << "#{msg}\n"
     end
 
-    # ws.send(msg) #to myself # don't send myself
+    ws.send(msg) #to myself
     connections.each do |username, con|
       #to other people
       con.send(msg) unless con == ws
