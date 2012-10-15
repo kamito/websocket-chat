@@ -4,7 +4,7 @@
 ## Settings
 #--------------------
 # SERVER (host and port with "ws" protocol)
-SERVER = "ws://127.0.0.1:51234"
+SERVER = "ws://0.0.0.0:51234"
 #--------------------
 
 
