@@ -82,14 +82,14 @@ Server.start(options) do |ws|
       msg = "Loggedin #{username}"
     else
       now = Time.now.strftime("%H:%M:%S")
-      msg = "[#{now}] #{username.ljust(10)}: #{msg}"
+      msg = "[#{now}] #{username.rjust(10)}: #{msg}"
     end
     puts "#{msg}"
     File.open(logpath, 'a') do |io|
       io << "#{msg}\n"
     end
 
-    ws.send(msg) #to myself
+    # ws.send(msg) #to myself
     connections.each do |username, con|
       #to other people
       con.send(msg) unless con == ws

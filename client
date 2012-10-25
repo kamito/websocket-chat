@@ -36,13 +36,16 @@ Thread.new() do
   exit()
 end
 
-$stdin.each_line() do |line|
-  data = line.chomp()
-  if data == 'exit'
+sleep(1)
+
+loop do
+  input = $stdin.gets
+  input.chomp!
+  if input == 'exit'
     client.close()
     exit()
   else
-    client.send(data)
+    client.send(input)
   end
 end
 
