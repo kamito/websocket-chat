@@ -21,6 +21,7 @@ PIDDILE = File.join(CURRENT_DIR, 'server.pid')
 FileUtils.makedirs(LOGDIR) unless File.exists?(LOGDIR)
 
 if ARGV[0] == "-D"
+  puts "Run server with daemon."
   Process.daemon(nochdir=true)
   File.open(PIDDILE, "w") do |io|
     io.write(Process.pid)

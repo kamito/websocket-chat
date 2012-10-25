@@ -9,4 +9,5 @@ if File.exists?(PIDDILE)
   Process.kill('KILL', pid)
 
   File.unlink(PIDDILE)
+  puts "Shutdown server. Bye bye."
 end

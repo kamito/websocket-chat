@@ -18,7 +18,7 @@ server
 ## Settings
 #--------------------
 # HOST
-HOST = "192.168.3.18"
+HOST = "127.0.0.1"
 # PORT
 PORT = 51234
 #--------------------
@@ -29,7 +29,7 @@ client
 ## Settings
 #--------------------
 # SERVER (host and port with "ws" protocol)
-SERVER = "ws://192.168.3.13:51234"
+SERVER = "ws://127.0.0.1:51234"
 #--------------------
 ```
 
@@ -44,6 +44,15 @@ Running server to daemon with "-D" option.
 ```
 $ cd /path/to/checkout/directory
 $ ./server -D
+Run server with daemon.
+$
+```
+
+Shutdown
+```
+$ ./server-close
+Shutdown server. Bye bye.
+$
 ```
 
 Chat client
